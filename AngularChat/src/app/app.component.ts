@@ -8,8 +8,26 @@ import { ChatService } from '../Services/chat.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'App Launched!';
+  //format the message
+  message : string;
+  //format the received messages
+  messages : string[] = [];
 
-  constructor(chatService: ChatService){}
-  
+  constructor(private chatService: ChatService){}
+
+  //use to send message
+  sendMessage(){
+    this.chatService.sendMessage(this.message);
+    this.message = ''
+  } 
+
+  ngOnInit(){
+    this.chatService
+      .getMessage()
+      .subscribe((message:string)=>{
+        this.messages.push(message);
+        console.log(this.messages);
+      });
+  }
+
 }
