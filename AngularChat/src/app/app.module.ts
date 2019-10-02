@@ -6,16 +6,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChatService } from '../Services/chat.service';
+import { UserMenuComponent } from './user-menu/user-menu.component';
+import { GroupsComponent } from './groups/groups.component';
+import { ChannelsComponent } from './channels/channels.component';
+import { ChatComponent } from './chat/chat.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserMenuComponent,
+    GroupsComponent,
+    ChannelsComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [ChatService],
   bootstrap: [AppComponent]

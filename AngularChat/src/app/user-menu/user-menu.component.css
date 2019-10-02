@@ -1,0 +1,8 @@
+#container{width: 100%; overflow: hidden;padding-left:5%; padding-right: 5%;box-sizing: border-box;}
+.center{margin: 0 auto; text-align: center;}
+.title{margin:10px 0;}
+.tableList{margin-top: 10px;margin-bottom: 10px;}
+.pure-button{padding:0.3em 1em; font-size: 0.9em;}
+.button-error {background: rgb(202, 60, 60);color:#fff;}
+.button-secondary {background: rgb(66, 184, 221); color:#fff;}
+.userForm{border: 1px solid #ccc; box-sizing: border-box;padding:10px;}

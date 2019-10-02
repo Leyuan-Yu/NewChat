@@ -1,0 +1,75 @@
+<div id="container" ng-controller="indexCtrl">
+    <h1 class="center title">User Menu</h1>
+    <hr />
+    <button class="pure-button pure-button-primary addUser" ng-click="showAddUser()">Add User</button>
+    <table class="pure-table center tableList" width="100%">
+        <thead>
+            <tr class="center">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Group</th>
+                <th>Avatar</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-class-odd="'pure-table-odd'" ng-repeat="user in users">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.group}}</td>
+                <td>{{user.imgpath}}</td>
+                <td>
+                    <button class="pure-button button-secondary" ng-click="updateUser(user._id)">Edit</button>
+                    <button class="pure-button button-error" ng-click="deleteUser(user._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr />
+
+    <form class="pure-form pure-form-aligned userForm" ng-show="showUserForm">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="userid">ID</label>
+                <input id="user_id" type="text" placeholder="_id" ng-model="user._id" ng-disabled="true">
+            </div>
+
+            <div class="pure-control-group">
+                <label for="userid"></label>
+                <input id="userid" type="number" placeholder="id" ng-model="user.id" ng-disabled="isLock">
+            </div>
+
+            <div class="pure-control-group">
+                <label for="name">Name</label>
+                <input id="name" type="text" placeholder="name" ng-model="user.name">
+            </div>
+
+            <div class="pure-control-group">
+                <label for="email">Email</label>
+                <input id="email" type="number" placeholder="email" ng-model="user.email">
+            </div>
+
+            <div class="pure-control-group">
+                <label for="gender">Group</label>
+                <select id="state" class="pure-input-1-2" style="width:29%;" ng-model="user.group">
+                    <option value="Super">Super</option>
+                    <option value="Normal">Normal</option>
+                </select>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="imgpath">imgpath</label>
+                <input id="imgpath" type="text" placeholder="imgpath" ng-model="user.imgpath">
+            </div>
+
+            <div class="pure-controls">
+                <button class="pure-button pure-button-primary" ng-click="addUser(user)" ng-show="showAddBtn">Add User</button>
+                <button class="pure-button pure-button-primary" ng-click="handleUpdateUser(user)" ng-show="showUpdateBtn">Make Edit</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
