@@ -2,6 +2,20 @@
 let express = require('express');
 let app = express();
 
+//import mongoose
+var mongoose = require('mongoose');
+//connect to mongodb locally
+var db = mongoose.connect("mongodb://localhost:27017/MyChatDB");
+//check if the connection suceed
+var connection = mongoose.connection;
+connection.on('connected',function(){
+    console.log('Connected to MongoDB!');
+});
+//handles connection errors
+connection.on('error',function(){
+    console.log('db connection error',error);
+});
+
 //setup http
 let http = require('http');
 let server = http.Server(app);

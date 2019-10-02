@@ -1,92 +1,113 @@
 // module contains user API controllers
 
+//import Mongoose schema
+var User = require('./../dataModels/userModel');
+
 var userController = {
-    //return all users
+    //return all users from DB
     handleGetUserList: function(req,res){
-        res.send(output(true, users, 'Query Success'));
+        User.find(function(err,users){
+            if(err){
+                res.send(output(false, null, 'request failed'));
+            }else{
+                res.send(output(true, users, 'request suceed'));
+            }
+        });
     },
 
-    //return single user by ID
+    //return single user by ID from DB
     handleGetUser: function(req,res){
-        var result;
-        console.log(req.params);
         if(req.params && req.params.id){
-            for(var i=0; i<users.length; i++){
-                if(users[i].id == parseInt(req.params.id)){
-                    result = users[i];
+            User.findById(req.params.id, function(err,user){
+                if (err || !user){
+                    res.send(output(false,null,'user not found'));
+                } else{
+                    res.send(output(true, user, 'query succeed!'));
                 }
-            }
-        }
-        if (result){
-            res.send(output(true, result, 'Query Success'));
+            });
         }else{
-            res.send(output(false, null, 'User not found'));
+            res.send(output(false, null, 'request failed'));
         }
     },
 
-    // function to add user
+    // function to add user to DB
     handleAddUser: function(req,res){
-        console.log(req.body);
-        if (req.method === 'POST'){
-            if(req.body.name && req.body.group && req.body.password && req.body.email){
-                users.push(req.body);
-                res.send(output(true, users, 'User Added!'));
+        var user = new User(req.body);
+        user.save(function(err){
+            //handle error
+            if(err){
+                res.send(output(false, null, 'unable to add user'));
             }else{
-                res.send(output(false,null,'Require More Info'));
+                //check if user is added
+                User.find(function(err,users){
+                    if(err){
+                        res.send(output(false, user, 'user already exist'));
+                    }else{
+                        res.send(output(true,users,'user added'));
+                    }
+                })
             }
-        }else{
-                res.send(output(false,null,'request error'));
-        }
+        })
     },
 
-    //function to change user info
+    //function to change user info in the DB
     handleGUpdateuser: function(req,res){
-        console.log(req.body);
+        // console.log(req.body);
         if (req.method === 'PUT'){
-            var index;
-            if (req.body.id && req.body.name && req.body.group && req.body.password && req.body.email){
-                for (var i=0; i<users.length; i++){
-                    // console.log('checking id'+i);
-                    if(users[i].id == parseInt(req.body.id)){
-                        index = i;
-                        users[i].name = req.body.name;
-                        users[i].group = req.body.group;
-                        users[i].password = req.body.password;
-                        users[i].email = req.body.email;
+            if(req.body && req.body._id){
+                User.findById(req.body._id, function(err,user){
+                    if (err || !user){
+                        res.send(output(false,null, 'cannot find user'));
+                    }else{
+                        //define params
+                        user.id = req.body.id;
+                        user.name = req.body.name;
+                        user.password = req.body.password;
+                        user.group = req.body.group;
+                        user.email = req.body.email;
+                        user.imgpath = req.body.imgpath;
+                        //update
+                        user.save(function(err){
+                            if(err){
+                                res.send(output(false, null, 'fail to update user'));
+                            }else{
+                                res.send(output(true, user, 'user update succeeed'));
+                            }
+                        });
                     }
-                }
-                if (index){
-                    res.send(output(true,users[index],'Change Complete'));
-                }else{
-                    res.send(output(false,null, 'user does not exist'));
-                }
+                });
             }else{
-                res.send(output(false,null, 'require more info'));
+                res.send(output(false,null,'require more info'));
             }
         }else{
-            res.send(output(false,null, 'incorrect requiest'));
+            res.send(output(false, null, 'request failed'));
         }
     },
-    // function to delete user
+    // function to delete user from DB
     handleDelUser: function(req,res){
         if (req.method === 'DELETE'){
-            if (req.body.id){
-                //count the number of users first
-                var count = users.length;
-                for (var i=0; i<users.length; i++){
-                    if(users[i].id == parseInt(req.body.id)){
-                        console.log('user '+i+' deleted');
-                        users.splice(i,1);
+            if(req.body && req.body._id){
+                User.findById(req.body._id, function(err,user){
+                    if (err || !user){
+                        res.send(output(false,null, 'cannot find user'));
+                    }else{
+                        user.remove(function(err){
+                            if(err){
+                                res.send(output(false,null,'user deletion failed'));
+                            }else{
+                                User.find(function(err,users){
+                                    if(err){
+                                        res.send(output(false, null, 'user deleted!'));
+                                    }else{
+                                        res.send(output(true, users, 'user deleted'));
+                                    }
+                                });
+                            }
+                        });
                     }
-                }
-                    //check if the delete is successful
-                if (count == users.length){
-                        res.send(output(true,null,'deletion fail'));
-                }else{
-                    res.send(output(true,users,'deletion success'));
-                }
+                });
             }else{
-                res.send(output(false,null,'request failed need id'));
+                res.send(output(false, null, 'need more info'));
             }
         }
     }
@@ -96,12 +117,12 @@ var userController = {
 
 module.exports = userController;
 
-//dummy data
+/* //dummy data
 var users = [
-    {id:1, name:'super', group:'super', password:'1234', email:'test@admin.com'},
-    {id:2, name:'aaa', group:'normal', password:'1234', email:'test@admin.com'},
-    {id:3, name:'groupadmin', group:'normal', password:'1234', email:'test@admin.com'}
-];
+    {id:1, name:'super', group:'super', password:'1234', email:'test@admin.com', imgpath:null},
+    {id:2, name:'aaa', group:'normal', password:'1234', email:'test@admin.com',imgpath:null},
+    {id:3, name:'groupadmin', group:'normal', password:'1234', email:'test@admin.com',imgpath:null}
+]; */
 
 //format the return data
 {
