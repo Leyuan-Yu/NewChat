@@ -12,5 +12,9 @@ userRouter.route('')
     .put(userController.handleGUpdateuser)
     .delete(userController.handleDelUser);
 
+// router for returning single user
+userRouter.route('/:id')
+    .get(userController.handleGetUser);
+        
 // export router module    
 module.exports = userRouter;

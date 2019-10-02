@@ -9,6 +9,11 @@ let server = http.Server(app);
 //import router module
 var userRouter = require('./routes/userRouter');
 
+//import body parser
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}));
+
 //setup sockets
 let socketIO = require('socket.io');
 let io = socketIO(server);
