@@ -44,14 +44,35 @@ export class RestApiService{
     }
 
     //DELETE() => to delete a user by name
-    DelUser(data){
-        return this.http.delete<any>(this.apiURL+'/user',data)
+    DelUser(name){
+        return this.http.delete<any>(this.apiURL+'/user/'+name)
     }
 
     //PUT() => to update a user by name and id
     UpUser(data){
         return this.http.put<any>(this.apiURL+'/user',data)
     }
+
+    //GET() => to get a list of Groups
+    getGroups(){
+        return this.http.get<any>(this.apiURL+'/group')
+    }   
+
+    //POST()=> to add a new group
+    addGroup(data){
+        return this.http.post<any>(this.apiURL+'/group',data)
+    }
+
+    //Put() => to update a group with name and id
+    upGroup(data){
+        return this.http.put<any>(this.apiURL+'/group',data)
+    }
+
+    //DELETE()=> to delete a group
+    delGroup(name){
+        return this.http.delete<any>(this.apiURL+'/group/'+name)
+    }
+
    /* //ERROR handling
     handleError(error){
         let errorMessage ='';

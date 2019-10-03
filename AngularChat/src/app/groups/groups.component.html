@@ -1,1 +1,50 @@
-<p>groups works!</p>
+<div id="container" ng-controller="indexCtrl">
+        <h1 class="center title">Group Menu</h1>
+        <hr />
+        <table class="pure-table center tableList" width="100%">
+            <thead>
+                <tr class="center">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Admin</th>
+                    <th>Channels</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                <tr ng-class-odd="'pure-table-odd'" *ngFor="let displayGroup of Groups">
+                    <th>{{displayGroup.id}}</th>
+                    <th>{{displayGroup.name}}</th>
+                    <th> 
+                        <ul>
+                            <li *ngFor = "let groupAdmins of displayGroup.admin">{{groupAdmins}}</li>
+                        </ul>
+                    </th>
+                    <td>
+                        <ul>
+                            <li *ngFor = "let displayChannels of displayGroup.channels" (click)='toChannel()'>{{displayChannels.name}}</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <hr />
+    
+        <form >
+            <label for="id">id</label>
+            <input type='text' [(ngModel)] = 'groupData.id' placeholder="ID" name='id'> <br>
+            <label for="name">Name</label>
+            <input type='text' [(ngModel)] = 'groupData.name' placeholder="Name" name='name'><br>
+            <label for="admin">Admin</label>
+            <input type='text' [(ngModel)] = 'groupData.admin' placeholder="Default admin" name='admin'><br>
+            <label for="channels">Email</label>
+            <input type='text' [(ngModel)] = 'groupData.channels' placeholder="Default Channel" name='channels'><br>
+            <a >Please fill in all details to add a Group</a><br>
+            <button (click) = "addGroup()">Add Group</button><br>
+            <a >Please put in the name and id of the group to delete</a><br>
+            <button (click) = "delGroup()">Delete Group</button><br>
+            <a>Please put in the name and id of the Group to update</a><br>
+            <button (click) = "upGroup()">Update Group</button><br>
+          </form>
+    </div>

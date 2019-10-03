@@ -89,11 +89,8 @@ var userController = {
     // function to delete user from DB
     handleDelUser: function(req,res){
         if (req.method === 'DELETE'){
-            console.log(req.body);
-            console.log(req.body.name);
-            console.log(req.body.id);
-            if(req.body && req.body.name && req.body.id){
-                User.findOne({name:req.body.name,id:req.body.id}, function(err,user){
+            if(req.params && req.params.name){
+                User.findOne(req.params, function(err,user){
                     if (err || !user){
                         res.send(output(false,null, 'cannot find user'));
                     }else{

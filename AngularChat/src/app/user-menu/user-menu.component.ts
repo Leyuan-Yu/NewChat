@@ -52,10 +52,8 @@ export class UserMenuComponent implements OnInit {
   }
 
   delUser(){
-    console.log(this.userData);
-    console.log(this.userData.name);
-    console.log(this.userData.id)
-    return this.restApi.DelUser(this.userData).subscribe(res=>{
+    return this.restApi.DelUser(this.userData.name).subscribe(res=>{
+      console.log(this.userData.name);
       alert(res.info);
       console.log(res);
       this.loadUsers();

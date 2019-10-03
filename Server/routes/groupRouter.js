@@ -9,12 +9,12 @@ var groupController = require('./../controllers/groupController');
 groupRouter.route('')
     .get(groupController.handleGetGroupList)
     .post(groupController.handleAddGroup)
-    .put(groupController.handleGUpdateGroup)
-    //.delete(userController.handleDelUser);
+    .put(groupController.handleGUpdateGroup);
+    
 
 // router for returning single user
 groupRouter.route('/:name')
-    .get(groupController.handleGetGroup);
-        
+    .get(groupController.handleGetGroup)
+    .delete(groupController.handleDelGroup);
 // export router module    
 module.exports = groupRouter;

@@ -86,27 +86,26 @@ var groupController = {
         }
     },
 
-    /*
-    // function to delete user from DB
-    handleDelUser: function(req,res){
+    
+    // function to delete group from DB
+    handleDelGroup: function(req,res){
         if (req.method === 'DELETE'){
-            console.log(req.body);
-            console.log(req.body.name);
-            console.log(req.body.id);
-            if(req.body && req.body.name && req.body.id){
-                User.findOne({name:req.body.name,id:req.body.id}, function(err,user){
-                    if (err || !user){
-                        res.send(output(false,null, 'cannot find user'));
+            if(req.params && req.params.name){
+                console.log(req.params);
+                Group.findOne(req.params, function(err,group){
+                    console.log(group);
+                    if (err || !group){
+                        res.send(output(false,null, 'cannot find group'));
                     }else{
-                        user.remove(function(err){
+                        group.remove(function(err){
                             if(err){
-                                res.send(output(false,null,'user deletion failed'));
+                                res.send(output(false,null,'group deletion failed'));
                             }else{
-                                User.find(function(err,users){
+                                Group.find(function(err,groups){
                                     if(err){
-                                        res.send(output(false, null, 'user deleted!'));
+                                        res.send(output(false, null, 'group deleted!'));
                                     }else{
-                                        res.send(output(true, users, 'user deleted'));
+                                        res.send(output(true, groups, 'group deleted'));
                                     }
                                 });
                             }
@@ -116,8 +115,10 @@ var groupController = {
             }else{
                 res.send(output(false, null, 'need more info'));
             }
+        } else{
+            res.send(output(false, null, 'request failed'));
         }
-    } */
+    } 
 };
 
 // export the module

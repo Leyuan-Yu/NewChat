@@ -9,12 +9,11 @@ var userController = require('./../controllers/userController');
 userRouter.route('')
     .get(userController.handleGetUserList)
     .post(userController.handleAddUser)
-    .put(userController.handleGUpdateuser)
-    .delete(userController.handleDelUser);
+    .put(userController.handleGUpdateuser);
 
 // router for returning single user
 userRouter.route('/:name')
-    .get(userController.handleGetUser);
-        
+    .get(userController.handleGetUser)
+    .delete(userController.handleDelUser);
 // export router module    
 module.exports = userRouter;
