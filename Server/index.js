@@ -22,6 +22,7 @@ let server = http.Server(app);
 
 //import router module
 var userRouter = require('./routes/userRouter');
+var loginRouter = require('./routes/loginRouter');
 
 //import body parser
 var bodyParser = require('body-parser');
@@ -71,3 +72,4 @@ app.get('/',function(req,res){
 
 //use the imported Router
 app.use('/user', userRouter);
+app.use('/login', loginRouter);
