@@ -27,6 +27,7 @@ let server = http.Server(app);
 //import router module
 var userRouter = require('./routes/userRouter');
 var loginRouter = require('./routes/loginRouter');
+var groupRouter = require('./routes/groupRouter');
 
 //import body parser
 var bodyParser = require('body-parser');
@@ -41,9 +42,7 @@ let io = socketIO(server);
 const port = process.env.PORT || 3000
 
 //connection event
-var groups = ['test','test1'];
-var channels = ['test','test1'];
-
+groups = []
 for (var i=0; i<groups.length; i++){
     var nsp = io.of('/'+groups[i]);
     nsp.on('connection',(socket)=>{
@@ -51,7 +50,7 @@ for (var i=0; i<groups.length; i++){
 
         //listen on message
         socket.on('new-message',(message)=>{
-            io.emit('new-message',message);
+            nsp.emit('new-message',message);
         });
     });
 };
@@ -83,3 +82,4 @@ app.get('/',function(req,res){
 //use the imported Router
 app.use('/user', userRouter);
 app.use('/login', loginRouter);
+app.use('/group', groupRouter);
