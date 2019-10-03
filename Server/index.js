@@ -2,6 +2,10 @@
 let express = require('express');
 let app = express();
 
+// import and use cors
+var cors =require('cors');
+app.use(cors());
+
 //import mongoose
 var mongoose = require('mongoose');
 //connect to mongodb locally

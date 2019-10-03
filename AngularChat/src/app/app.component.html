@@ -1,8 +1,13 @@
-<div *ngFor="let message of messages">
-  {{message}}
-</div>
+<div *ngIf="true">
+<h1>Login Page</h1>
 
-<input [(ngModel)] ="message" (keyup)="$event.keyCode == 13 && sendMessage()" />
-<button (click)="sendMessage()">Send</button>
+<div>
+  <form>
+    <input type='text' [(ngModel)] = 'loginData.name' placeholder="Name" name='name'>
+    <input type='password' [(ngModel)] = 'loginData.password' placeholder="password" name='password'>
+    <button (click) = "login()">Log In</button>
+  </form>
+</div>
+</div>
 
 <router-outlet></router-outlet>

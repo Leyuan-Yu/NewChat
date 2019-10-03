@@ -5,7 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+//services
 import { ChatService } from '../Services/chat.service';
+
+//components
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { GroupsComponent } from './groups/groups.component';
 import { ChannelsComponent } from './channels/channels.component';

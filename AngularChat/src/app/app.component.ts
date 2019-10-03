@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-//import chat service
-import { ChatService } from '../Services/chat.service';
+import { Component, Input } from '@angular/core';
+import {Router} from '@angular/router';
+import { RestApiService } from '../Services/api-services';
+
 
 @Component({
   selector: 'app-root',
@@ -8,26 +9,34 @@ import { ChatService } from '../Services/chat.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  //format the message
-  message : string;
-  //format the received messages
-  messages : string[] = [];
+  loginData = {name:'', password:''};
+  routerUrl : string;
 
-  constructor(private chatService: ChatService){}
-
-  //use to send message
-  sendMessage(){
-    this.chatService.sendMessage(this.message);
-    this.message = ''
-  } 
+  constructor(
+    public restApi: RestApiService,
+    public router : Router,
+  ){
+    this.routerUrl = router.url;
+  }
 
   ngOnInit(){
-    this.chatService
-      .getMessage()
-      .subscribe((message:string)=>{
-        this.messages.push(message);
-        console.log(this.messages);
-      });
+
   }
+
+  login(){
+    console.log(this.router.url);
+    this.restApi.logIn(this.loginData).subscribe(
+      res => {
+        localStorage.setItem('loggedIn', res.status)
+        alert(res.info)
+        if(res.status){
+        localStorage.setItem('CurrentUser',res.data.name)
+        localStorage.setItem('group', res.data.group)}
+        this.router.navigate(['/Groups'])
+      },
+      err => console.log(err)
+    )
+  }
+
 
 }
