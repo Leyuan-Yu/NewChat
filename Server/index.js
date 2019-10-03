@@ -41,14 +41,20 @@ let io = socketIO(server);
 const port = process.env.PORT || 3000
 
 //connection event
-io.on('connection',(socket)=>{
-    console.log('user connected');
+var groups = ['test','test1'];
+var channels = ['test','test1'];
 
-    //listen on message
-    socket.on('new-message',(message)=>{
-        io.emit('new-message',message);
+for (var i=0; i<groups.length; i++){
+    var nsp = io.of('/'+groups[i]);
+    nsp.on('connection',(socket)=>{
+        console.log('user connected to '+nsp);
+
+        //listen on message
+        socket.on('new-message',(message)=>{
+            io.emit('new-message',message);
+        });
     });
-});
+};
 
 //start listening
 server.listen(port,()=>{

@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 //export service
 export class ChatService{
     private url = 'http://localhost:3000';
-    private socket;
-
+    private group = localStorage.getItem('CurrentGroup');
+    private channel = localStorage.getItem('CurrentChannel');
+    private socket 
 
     constructor(){
-        this.socket = io(this.url);
+        this.socket = io(this.url+'/'+this.group);
     }
 
     //function to send message 
