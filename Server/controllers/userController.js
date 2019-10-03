@@ -15,10 +15,11 @@ var userController = {
         });
     },
 
-    //return single user by ID from DB
+    //return single user by name from DB
     handleGetUser: function(req,res){
-        if(req.params && req.params.id){
-            User.findById(req.params.id, function(err,user){
+        if(req.params && req.params.name){
+            User.findOne(req.params, function(err,user){
+                console.log(req.params);
                 if (err || !user){
                     res.send(output(false,null,'user not found'));
                 } else{
@@ -32,6 +33,8 @@ var userController = {
 
     // function to add user to DB
     handleAddUser: function(req,res){
+        console.log(req.body.name);
+        console.log(req.body.id);
         var user = new User(req.body);
         user.save(function(err){
             //handle error
@@ -54,8 +57,8 @@ var userController = {
     handleGUpdateuser: function(req,res){
         // console.log(req.body);
         if (req.method === 'PUT'){
-            if(req.body && req.body._id){
-                User.findById(req.body._id, function(err,user){
+            if(req.body && req.body.name &&req.body.id){
+                User.findOne({name:req.body.name,id:req.body.id}, function(err,user){
                     if (err || !user){
                         res.send(output(false,null, 'cannot find user'));
                     }else{
@@ -86,8 +89,11 @@ var userController = {
     // function to delete user from DB
     handleDelUser: function(req,res){
         if (req.method === 'DELETE'){
-            if(req.body && req.body._id){
-                User.findById(req.body._id, function(err,user){
+            console.log(req.body);
+            console.log(req.body.name);
+            console.log(req.body.id);
+            if(req.body && req.body.name && req.body.id){
+                User.findOne({name:req.body.name,id:req.body.id}, function(err,user){
                     if (err || !user){
                         res.send(output(false,null, 'cannot find user'));
                     }else{

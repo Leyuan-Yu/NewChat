@@ -13,7 +13,7 @@ userRouter.route('')
     .delete(userController.handleDelUser);
 
 // router for returning single user
-userRouter.route('/:id')
+userRouter.route('/:name')
     .get(userController.handleGetUser);
         
 // export router module    

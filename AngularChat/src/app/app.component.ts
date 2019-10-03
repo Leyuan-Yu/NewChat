@@ -11,12 +11,13 @@ import { RestApiService } from '../Services/api-services';
 export class AppComponent {
   loginData = {name:'', password:''};
   routerUrl : string;
+  loggin : string;
 
   constructor(
     public restApi: RestApiService,
     public router : Router,
   ){
-    this.routerUrl = router.url;
+    this.loggin = localStorage.getItem('loggedin');
   }
 
   ngOnInit(){
