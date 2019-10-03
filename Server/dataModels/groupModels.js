@@ -10,7 +10,8 @@ var groupModel = new Schema({
     id : Number,
     name: String,
     admin: [String],
-    channels: [{name:String,admin:[String]}]
+    channels: [{name:String,admin:[String]}],
+    users : [String]
 });
 
 //export the module

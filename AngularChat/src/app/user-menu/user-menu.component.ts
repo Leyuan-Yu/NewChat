@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestApiService } from '../../Services/api-services';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-menu',
@@ -13,7 +14,7 @@ export class UserMenuComponent implements OnInit {
   userData = {id:'',name:'', password:'',email:'',imgpath:'',group:''};
   
   
-  constructor(public restApi:RestApiService) {
+  constructor(public restApi:RestApiService, private router:Router) {
     this.usergroup = localStorage.getItem('group')
     this.currentUser = localStorage.getItem('CurrentUser');
    }
@@ -68,4 +69,7 @@ export class UserMenuComponent implements OnInit {
     })
   }
 
+  back(){
+    this.router.navigate(['/Groups'])
+  }
 }

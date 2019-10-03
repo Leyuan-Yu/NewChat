@@ -11,8 +11,8 @@ export class GroupsComponent implements OnInit {
   usergroup: string;
   currentUser: string;
   Groups: any = {};
-  groupData = {id:'',name:'', admin:'',channels:''};
-  upGroupData = {id:'',name:'',admin:[],channels:[]};
+  groupData = {id:'',name:'', admin:'',channels:'', users:''};
+  upGroupData = {id:'',name:'',admin:[],channels:[],users:[]};
   constructor(
     public restApi:RestApiService,
     public router : Router
@@ -32,11 +32,19 @@ export class GroupsComponent implements OnInit {
         console.log(res.data);
         this.Groups = res.data;
       } else{
-        // this.loadOneUser();
+        this.loadUserGroup();
       }
     },
     err => console.log(err)
     )
+  }
+
+  loadUserGroup(){
+    console.log(this.currentUser);
+    return this.restApi.getUserGroup(this.currentUser).subscribe(res =>{
+      this.Groups = res.data
+      console.log(res.data)
+    })    
   }
 
   addGroup(){
@@ -44,6 +52,7 @@ export class GroupsComponent implements OnInit {
     this.upGroupData.name = this.groupData.name;
     this.upGroupData.admin[0] = this.groupData.admin;
     this.upGroupData.channels[0] = {name: this.groupData.channels, admin:null}
+    this.upGroupData.users [0]= this.groupData.users;
     console.log(this.upGroupData);
     return this.restApi.addGroup(this.upGroupData).subscribe(res =>{
       alert(res.info);
@@ -56,6 +65,7 @@ export class GroupsComponent implements OnInit {
     this.upGroupData.name = this.groupData.name;
     this.upGroupData.admin[0] = this.groupData.admin;
     this.upGroupData.channels[0] = {name: this.groupData.channels, admin:null}
+    this.upGroupData.users [0]= this.groupData.users;
     console.log(this.upGroupData);
     return this.restApi.upGroup(this.upGroupData).subscribe(res =>{
       alert(res.info);
@@ -70,8 +80,15 @@ export class GroupsComponent implements OnInit {
     })
   }
 
-  toChannel(){
+  toChannel(channelName,groupName){
+    localStorage.setItem('currentChannel',channelName);
+    localStorage.setItem('currentGroup',groupName);
     this.router.navigate(['/Chat'])
+  }
+  
+  
+  userMenu(){
+    this.router.navigate(['/Menu'])
   }
 
 }

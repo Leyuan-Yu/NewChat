@@ -1,12 +1,12 @@
 <div>
 <div >
-<h1 >Login Page</h1>
+<h1 >Angular Chat Application</h1>
 
 <div>
   <form>
-    <input type='text' [(ngModel)] = 'loginData.name' placeholder="Name" name='name'>
-    <input type='password' [(ngModel)] = 'loginData.password' placeholder="password" name='password'>
-    <button (click) = "login()">Log In</button>
+    <input *ngIf = "!isLoggedin()" type='text' [(ngModel)] = 'loginData.name' placeholder="Name" name='name'>
+    <input *ngIf = "!isLoggedin()" type='password' [(ngModel)] = 'loginData.password' placeholder="password" name='password'>
+    <button *ngIf = "!isLoggedin()" (click) = "login()">Log In</button>
   </form>
 </div>
 </div>
@@ -14,6 +14,7 @@
 <div >
   <button (click) = "logOut()" >Log Out</button>
 </div>
+
 
 </div>
 <router-outlet></router-outlet>

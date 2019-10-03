@@ -73,6 +73,11 @@ export class RestApiService{
         return this.http.delete<any>(this.apiURL+'/group/'+name)
     }
 
+    //GET()=>to get a particular users group
+    getUserGroup(users){
+        return this.http.get<any>(this.apiURL+'/group/'+users)
+    }
+
    /* //ERROR handling
     handleError(error){
         let errorMessage ='';

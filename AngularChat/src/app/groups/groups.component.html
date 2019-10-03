@@ -22,7 +22,7 @@
                     </th>
                     <td>
                         <ul>
-                            <li *ngFor = "let displayChannels of displayGroup.channels" (click)='toChannel()'>{{displayChannels.name}}</li>
+                            <li *ngFor = "let displayChannels of displayGroup.channels" (click)='toChannel(displayChannels.name,displayGroup.name)'>{{displayChannels.name}}</li>
                         </ul>
                     </td>
                 </tr>
@@ -38,8 +38,10 @@
             <input type='text' [(ngModel)] = 'groupData.name' placeholder="Name" name='name'><br>
             <label for="admin">Admin</label>
             <input type='text' [(ngModel)] = 'groupData.admin' placeholder="Default admin" name='admin'><br>
-            <label for="channels">Email</label>
+            <label for="channels">Channels</label>
             <input type='text' [(ngModel)] = 'groupData.channels' placeholder="Default Channel" name='channels'><br>
+            <label for="users">Users</label>
+            <input type='text' [(ngModel)] = 'groupData.users' placeholder="Add user here" name='users'><br>
             <a >Please fill in all details to add a Group</a><br>
             <button (click) = "addGroup()">Add Group</button><br>
             <a >Please put in the name and id of the group to delete</a><br>
@@ -47,4 +49,8 @@
             <a>Please put in the name and id of the Group to update</a><br>
             <button (click) = "upGroup()">Update Group</button><br>
           </form>
+    </div>
+
+    <div >
+            <button (click) = "userMenu()" >User Menu</button>
     </div>

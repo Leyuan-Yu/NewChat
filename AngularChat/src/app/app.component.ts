@@ -17,7 +17,6 @@ export class AppComponent {
     public restApi: RestApiService,
     public router : Router,
   ){
-    this.loggin = localStorage.getItem('loggedin');
   }
 
   ngOnInit(){
@@ -25,18 +24,36 @@ export class AppComponent {
   }
 
   login(){
+    event.preventDefault();
     console.log(this.router.url);
     this.restApi.logIn(this.loginData).subscribe(
       res => {
-        localStorage.setItem('loggedIn', res.status)
+        localStorage.setItem('loggedIn', res.status);
+        this.loggin = localStorage.getItem('loggedin');
         alert(res.info)
         if(res.status){
-        localStorage.setItem('CurrentUser',res.data.name)
-        localStorage.setItem('group', res.data.group)}
-        this.router.navigate(['/Groups'])
+          localStorage.setItem('CurrentUser',res.data.name)
+          localStorage.setItem('group', res.data.group)}
+          if(localStorage.getItem('loggedIn') == 'true'){
+          this.router.navigate(['/Groups'])
+        }
       },
       err => console.log(err)
     )
+  }
+
+  logOut(){
+    localStorage.clear();
+    localStorage.setItem('loggedIn', 'false');
+    console.log('localStorage Cleared');
+    this.router.navigate(['/'])
+  }
+
+  isLoggedin(){
+    if (localStorage.getItem('loggedin')=='true'){
+      return true
+    }else 
+      {return false}
   }
 
 

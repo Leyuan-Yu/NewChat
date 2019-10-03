@@ -32,6 +32,21 @@ var groupController = {
         }
     },
 
+    handleGetUserGroup: function(req,res){
+        if(req.params && req.params.users){
+            console.log(req.params.users);
+            Group.find({ users: { "$in": req.params.users } }, function(err,groups){
+                if (err){
+                    res.send(output(false,null,'request failed'));
+                }else{
+                    res.send(output(true,groups,'query succeed'));
+                }
+            });
+        }else{
+            res.send(output(false,null,'need more info'))
+        }
+    },
+
     // function to add group to DB
     handleAddGroup: function(req,res){
         var group = new Group(req.body);
@@ -68,6 +83,7 @@ var groupController = {
                         group.name = req.body.name;
                         group.admin = req.body.admin;
                         group.channels = req.body.channels;
+                        group.users.push(req.body.users[0]);
                         //update
                         group.save(function(err){
                             if(err){

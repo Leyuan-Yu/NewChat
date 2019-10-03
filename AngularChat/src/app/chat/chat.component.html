@@ -1,6 +1,12 @@
+
 <div *ngFor="let message of messages">
     {{message}}
 </div>
-  
+  <a>Current Group is: {{groupName}} </a>
+  <br>
+  <a>Current Channel is: {{channelName}} </a>
+  <br>
   <input [(ngModel)] ="message" (keyup)="$event.keyCode == 13 && sendMessage()" />
   <button (click)="sendMessage()">Send</button>
+  <br>
+  <button (click)="back()">Back</button>

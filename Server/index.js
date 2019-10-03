@@ -42,18 +42,34 @@ let io = socketIO(server);
 const port = process.env.PORT || 3000
 
 //connection event
-groups = []
-for (var i=0; i<groups.length; i++){
-    var nsp = io.of('/'+groups[i]);
+//function to create namespace
+function createNamespace(group){
+    var nsp = io.of('/'+group);
     nsp.on('connection',(socket)=>{
-        console.log('user connected to '+nsp);
-
-        //listen on message
+        console.log('user connected to ' + nsp);
         socket.on('new-message',(message)=>{
             nsp.emit('new-message',message);
-        });
     });
-};
+    });
+}
+
+//import groups
+var chatGroups = [1];
+var Group = require('./dataModels/groupModels');
+
+Group.find(function(err,groups){
+    if(err){
+        console.log(err);
+    }else{
+        for (var i=0; i<groups.length;i++){  
+            createNamespace(groups[i].name);    
+        }
+    }
+});
+
+
+
+
 
 //start listening
 server.listen(port,()=>{

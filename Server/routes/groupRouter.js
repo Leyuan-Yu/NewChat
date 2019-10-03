@@ -14,7 +14,10 @@ groupRouter.route('')
 
 // router for returning single user
 groupRouter.route('/:name')
-    .get(groupController.handleGetGroup)
+    //.get(groupController.handleGetGroup)
     .delete(groupController.handleDelGroup);
+
+groupRouter.route('/:users')
+    .get(groupController.handleGetUserGroup);
 // export router module    
 module.exports = groupRouter;
